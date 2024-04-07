@@ -20,30 +20,13 @@ public class Main {
 
     private static WateringAgent wateringAgent = new WateringAgent();
     public static void main(String[] args) throws IOException {
-        Terminal terminal = TerminalBuilder.builder()
-                .system(true)
-                .build();
-
-        Completer completer = new ArgumentCompleter(
-                new StringsCompleter("bar", "baz"),
-                new StringsCompleter("foo"),
-                new StringsCompleter("ree"),
-                new NullCompleter());
-
-        // https://github.com/jline/jline3/wiki/Using-line-readers
-        LineReader lineReader = LineReaderBuilder.builder()
-                .terminal(terminal)
-                .completer(completer)
-                .build();
 
         String prompt = "demo> ";
         String line = null;
         //while (!"quit".equals(line)) {
         // ask user to inpute mositure level
         // print "reading moisture level..."
-        System.out.println("Reading moisture level. Please enter the moisture level: ");
-        float moistureLevel = Float.parseFloat(lineReader.readLine(prompt));
-        wateringAgent.setMoistureLevel(moistureLevel);
+        wateringAgent.readSensors();
         wateringAgent.run();
 
 
