@@ -39,7 +39,13 @@ public class Main {
         String prompt = "demo> ";
         String line = null;
         //while (!"quit".equals(line)) {
-            wateringAgent.waterPlants();
-        //}
+        // ask user to inpute mositure level
+        // print "reading moisture level..."
+        System.out.println("Reading moisture level. Please enter the moisture level: ");
+        float moistureLevel = Float.parseFloat(lineReader.readLine(prompt));
+        wateringAgent.setMoistureLevel(moistureLevel);
+        wateringAgent.run();
+
+
     }
 }

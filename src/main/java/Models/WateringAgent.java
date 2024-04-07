@@ -12,8 +12,28 @@ public class WateringAgent {
         }
     };
 
+    private float moistureLevel = 20;
+
+    // this method sets the moisture level of the soil
+    public void setMoistureLevel(float currWaterLevel) {
+        // Get the moisture level of the soil
+        moistureLevel = currWaterLevel;
+    }
+
+    // this method waters the plants in the greenhouse if required
+    public void run() {
+        // Water the plants if required
+        waterPlants(moistureLevel);
+    }
+
     // this method waters the plants in the greenhouse for the next 30 minutes
-    public void waterPlants() {
+    private void waterPlants(float moistureLevel) {
+        // if the moisture level is above and at 20% don't water the plants
+        if (moistureLevel >= 20) {
+            System.out.println("Moisture level is at " + moistureLevel + "%. No need to water the plants.");
+            return;
+        }
+
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
             // Print whatever you want here
