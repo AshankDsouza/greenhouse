@@ -5,6 +5,7 @@
 
 - Java 8+
 - Maven 3.3+
+- jdk 1.8
 
 # Build
 
