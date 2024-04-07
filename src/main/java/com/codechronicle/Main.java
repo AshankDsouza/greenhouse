@@ -12,10 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+import Models.WateringAgent;
+
 public class Main {
 
     private static Logger log = LoggerFactory.getLogger(Main.class);
 
+    private static WateringAgent wateringAgent = new WateringAgent();
     public static void main(String[] args) throws IOException {
         Terminal terminal = TerminalBuilder.builder()
                 .system(true)
@@ -35,15 +38,8 @@ public class Main {
 
         String prompt = "demo> ";
         String line = null;
-        while (!"quit".equals(line)) {
-            try {
-                line = lineReader.readLine(prompt);
-                System.out.println("Line = " + line);
-            } catch (UserInterruptException e) {
-                // Ignore
-            } catch (EndOfFileException e) {
-                return;
-            }
-        }
+        //while (!"quit".equals(line)) {
+            wateringAgent.waterPlants();
+        //}
     }
 }
