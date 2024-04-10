@@ -19,6 +19,7 @@ public class Main {
     private static Logger log = LoggerFactory.getLogger(Main.class);
 
     private static WateringAgent wateringAgent = new WateringAgent();
+
     public static void main(String[] args) throws IOException {
 
         String prompt = "demo> ";
