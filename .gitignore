@@ -6,4 +6,5 @@
 target
 src/main/resources/server.props
 *launch.sh
+.idea/*
 
