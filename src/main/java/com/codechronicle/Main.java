@@ -1,6 +1,8 @@
 package com.codechronicle;
 
 
+import Models.LightingAgent;
+import Models.NutrientAgent;
 import org.jline.reader.*;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.NullCompleter;
@@ -13,12 +15,22 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import Models.WateringAgent;
+import Models.NutrientAgent;
+import Models.LightingAgent;
+import Interfaces.Agent;
+
 
 public class Main {
 
-    private static Logger log = LoggerFactory.getLogger(Main.class);
+    public static Logger log = LoggerFactory.getLogger(Main.class);
 
     private static WateringAgent wateringAgent = new WateringAgent();
+    private static LightingAgent lightingAgent = new LightingAgent();
+
+    private static NutrientAgent nutrientAgent = new NutrientAgent();
+
+    // Make a list of agents
+    private static Agent[] agents = {wateringAgent, lightingAgent, nutrientAgent};
 
     public static void main(String[] args) throws IOException {
 
@@ -27,8 +39,36 @@ public class Main {
         //while (!"quit".equals(line)) {
         // ask user to inpute mositure level
         // print "reading moisture level..."
-        wateringAgent.readSensors();
-        wateringAgent.run();
+        //wateringAgent.readSensors();
+        //wateringAgent.run();
+
+
+        // make an infinite loop
+        while (true) {
+            // for each agent in the agents list
+            for (Agent agent : agents) {
+                // make each agent run on a separate thread
+
+
+                Thread thread = new Thread(() -> {
+
+                    // read the sensors
+                    agent.readSensors();
+                    // run the agent
+                    agent.run();
+                });
+                // start the thread
+                thread.start();
+                // wait for the thread to finish
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    log.error("Thread interrupted", e);
+                }
+            }
+        }
+
+
 
 
     }
