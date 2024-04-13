@@ -4,10 +4,10 @@ import Interfaces.Agent;
 
 public class NutrientAgent implements Agent {
     public void readSensors() {
-        System.out.println("Reading nutrient level...");
+        System.out.println("Not implemented yet.");
     }
 
     public void run() {
-        System.out.println("Adding nutrients...");
+        System.out.println("Not implemented yet.");
     }
 }
