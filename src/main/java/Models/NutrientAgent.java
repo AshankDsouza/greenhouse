@@ -180,6 +180,8 @@ public class NutrientAgent implements Agent {
 
     public void run() {
         if (nutrientRequired) {
+            System.out.println("Sending alert...");
+            alert("There is nutrient requirement reported...");
             System.out.println("Calling nutrients adder...");
             NutrientAdder nutrientAdder = new NutrientAdder();
             nutrientAdder.addNutrients(currentNutrientStatus);
@@ -191,7 +193,7 @@ public class NutrientAgent implements Agent {
 
     @Override
     public void alert(String message) {
-
+        System.out.println(message);
     }
 
     @Override
