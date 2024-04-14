@@ -31,11 +31,11 @@ public class LightingAgent  implements Agent {
     private static boolean shadingRequired =false;
 
     public void readSensors() {
-        System.out.println("Reading the light Intensity sensor value");
+        System.out.println("Reading the light Intensity sensor value for lighting agent");
         float lightIntensity = Float.parseFloat(lineReader.readLine(prompt));
-        System.out.println("Reading the humidity sensor value");
+        System.out.println("Reading the humidity sensor value for lighting agent");
         float humidity = Float.parseFloat(lineReader.readLine(prompt));
-        System.out.println("Reading the temperature sensor value");
+        System.out.println("Reading the temperature sensor value for lighting agent");
         float temperature = Float.parseFloat(lineReader.readLine(prompt));
         setLightIntensity(lightIntensity);
         setHumidity(humidity);
@@ -90,27 +90,39 @@ public class LightingAgent  implements Agent {
     }
 
     public void run() {
-        readSensors();
+
         boolean ledRequirement= isLedRequired();
         boolean shadingRequirement = isShadingRequired(ledRequirement);
         setLedRequirement( ledRequirement);
         setShadingRequired( shadingRequirement);
-
+        String display="Light is adequate";
+        if(ledRequired ==true)
+            display="---Turn ON the LED---";
+        if(shadingRequired ==true)
+            display="-----Shading should been turned on for the lighting agent------";
+        if(shadingRequired == false && ledRequired ==false)
+            display="-----Optimal Amount of light is available - No external source required for lighting agent-----";
+        alert(display);
+        wait(10);
     }
 
 
     @Override
     public void alert(String message) {
-        if(ledRequired ==true)
-            System.out.println("LED is ON");
-        if(shadingRequired ==true)
-            System.out.println("Shading has been turned on");
-        if(shadingRequired == false && ledRequired ==false)
-            System.out.println(" Optimal Amount of light is available - No external source required");
+       System.out.println(message);
     }
 
     @Override
     public void wait(int timeInSeconds) {
-
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + 10000;
+        while (System.currentTimeMillis() < endTime) {
+            System.out.println("Reseting");
+            try {
+                Thread.sleep(1000); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
