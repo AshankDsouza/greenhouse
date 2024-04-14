@@ -1,48 +1,45 @@
 package Models;
-
 import Interfaces.Agent;
-import com.opencsv.CSVReader;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import services.FileServices;
 
-public class NutrientAgent implements Agent {
+import java.util.HashMap;
 
-    public static int nitrogen = 32; //unit ppm
-    public static int phosphorous = 15; //unit ppm
-    public static int potassium = 40; //unit ppm
-    public static double phLevel = 6.5; //unit ph
 
-    public static double organicMatterContent = 3.2; //(organic matter content) unit percentage
+public class NutirentFeedbackAgent implements Agent {
+    public static int nitrogen = 80; //unit ppm
+    public static int phosphorous = 60; //unit ppm
+    public static int potassium = 200; //unit ppm
+    public static double phLevelMax = 8.5; //unit ph
 
-    public static double electricalConductivity = 0.8; // electrical conductivity unit -> ds/m
+    public static double phLevelMin = 5.5; //unit ph
 
-    public static int calcium = 1500; //unit ppm
-    public static int magnesium = 200; //unit ppm
+    public static double organicMatterContent = 10; //(organic matter content) unit percentage
+
+    public static double electricalConductivity = 4; // electrical conductivity unit -> ds/m
+
+    public static int calcium = 2000; //unit ppm
+    public static int magnesium = 400; //unit ppm
+
+    public static boolean feedbackRequired = false;
 
     public static HashMap currentNutrientStatus = new HashMap();
-
-    public static boolean nutrientRequired = false;
-
-
     public void readSensors() {
-
-        System.out.println("Reading nutrient level...");
+        System.out.println("Reading nutrient level in feedback...");
         XSSFSheet sensorData = FileServices.readXLSX("NutrientSensorData.xlsx");
-        HashMap nutrientDefficiencyMap = analyseNutrient(sensorData);
+        HashMap nutrientDefficiencyMap = analyseNutrientAfterNutrientAddition(sensorData);
         currentNutrientStatus = nutrientDefficiencyMap;
     }
 
-    public static HashMap analyseNutrient(XSSFSheet mysheet){
+    public void run() {
+        if (feedbackRequired){
+        System.out.println("Calling back nutrient agent for discrepancy.....");
+        }
+    }
+
+    public static HashMap analyseNutrientAfterNutrientAddition(XSSFSheet mysheet){
         HashMap nutrientMap = new HashMap();
         for (int rowIndex = 1; rowIndex <= mysheet.getLastRowNum(); rowIndex++) {
             Row row = mysheet.getRow(rowIndex);
@@ -60,11 +57,11 @@ public class NutrientAgent implements Agent {
                     // Found column and there is value in the cell.
                     Integer nitroVal = Double.valueOf(nitro.getNumericCellValue()).intValue();
                     if (nitroVal< nitrogen){
-                        nutrientMap.put("NitrogenLess",true);
-                        nutrientRequired = true;
+                        nutrientMap.put("NitrogenExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("NitrogenLess",false);
+                        nutrientMap.put("NitrogenExcess",false);
                     }
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
@@ -75,11 +72,11 @@ public class NutrientAgent implements Agent {
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
                     if (phospVal< phosphorous){
-                        nutrientMap.put("PhosphorousLess",true);
-                        nutrientRequired = true;
+                        nutrientMap.put("PhosphorousExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("PhosphorousLess",false);
+                        nutrientMap.put("PhosphorousExcess",false);
                     }
                 }
                 if (potash != null) {
@@ -88,11 +85,11 @@ public class NutrientAgent implements Agent {
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
                     if (potashVal< potassium){
-                        nutrientMap.put("PotassiumLess",true);
-                        nutrientRequired = true;
+                        nutrientMap.put("PotassiumExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("PotassiumLess",false);
+                        nutrientMap.put("PotassiumExcess",false);
                     }
                 }
                 if (magn != null) {
@@ -100,12 +97,12 @@ public class NutrientAgent implements Agent {
                     Integer magnVal = Double.valueOf(magn.getNumericCellValue()).intValue();
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
-                    if (magnVal< magnesium){
-                        nutrientMap.put("MagnesiumLess",true);
-                        nutrientRequired = true;
+                    if (magnVal> magnesium){
+                        nutrientMap.put("MagnesiumExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("MagnesiumLess",false);
+                        nutrientMap.put("MagnesiumExcess",false);
                     }
                 }
                 if (calc != null) {
@@ -113,12 +110,12 @@ public class NutrientAgent implements Agent {
                     Integer calcVal = Double.valueOf(calc.getNumericCellValue()).intValue();
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
-                    if (calcVal< calcium){
-                        nutrientMap.put("CalciumLess",true);
-                        nutrientRequired = true;
+                    if (calcVal> calcium){
+                        nutrientMap.put("CalciumExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("CalciumLess",false);
+                        nutrientMap.put("CalciumExcess",false);
                     }
                 }
                 if (omc != null) {
@@ -126,12 +123,12 @@ public class NutrientAgent implements Agent {
                     Double omcVal = omc.getNumericCellValue();
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
-                    if (omcVal< organicMatterContent){
-                        nutrientMap.put("OMCLess",true);
-                        nutrientRequired = true;
+                    if (omcVal> organicMatterContent){
+                        nutrientMap.put("OMCExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("OMCLess",false);
+                        nutrientMap.put("OMCExcess",false);
                     }
                 }
                 if (ec != null) {
@@ -139,12 +136,12 @@ public class NutrientAgent implements Agent {
                     Double ecVal = ec.getNumericCellValue();
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
-                    if (ecVal< electricalConductivity){
-                        nutrientMap.put("SaltLess",true);
-                        nutrientRequired = true;
+                    if (ecVal> electricalConductivity){
+                        nutrientMap.put("SaltExcess",true);
+                        feedbackRequired = true;
                     }
                     else{
-                        nutrientMap.put("SaltLess",false);
+                        nutrientMap.put("SaltExcess",false);
                     }
                 }
                 if (ph != null) {
@@ -152,12 +149,19 @@ public class NutrientAgent implements Agent {
                     Double phVal = ph.getNumericCellValue();
                     // Do something with the cellValueMaybeNull here ...
                     // break; ???
-                    if (phVal< phLevel){
+                    if (phVal< phLevelMin){
                         nutrientMap.put("PHLevelLess",true);
-                        nutrientRequired = true;
+                        feedbackRequired = true;
                     }
                     else{
                         nutrientMap.put("PHLevelLess",false);
+                    }
+                    if (phVal> phLevelMax){
+                        nutrientMap.put("PHLevelExceeded",true);
+                        feedbackRequired = true;
+                    }
+                    else{
+                        nutrientMap.put("PHLevelExceeded",false);
                     }
                 }
             }
@@ -165,27 +169,6 @@ public class NutrientAgent implements Agent {
         return nutrientMap;
     }
 
-    public static void feedbackAction(HashMap feedbackResponse,boolean optimumReached){
-        if (optimumReached) {
-            System.out.println("Calling react component to fix excessive of the nutrients...");
-            NutrientReactComponent nrc = new NutrientReactComponent();
-        }
-        else{
-            System.out.println("Everything works fine in feedback.");
-        }
 
 
-    }
-
-
-    public void run() {
-        if (nutrientRequired) {
-            System.out.println("Calling nutrients adder...");
-            NutrientAdder nutrientAdder = new NutrientAdder();
-            nutrientAdder.addNutrients(currentNutrientStatus);
-        }
-        else{
-            System.out.println("Nutrients are sufficient!!");
-        }
-    }
 }
