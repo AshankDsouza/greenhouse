@@ -17,6 +17,7 @@ import java.io.IOException;
 import Models.WateringAgent;
 import Models.NutrientAgent;
 import Models.LightingAgent;
+import Models.InternalConditionsAgent;
 import Interfaces.Agent;
 
 
@@ -29,8 +30,13 @@ public class Main {
 
     private static NutrientAgent nutrientAgent = new NutrientAgent();
 
+
+    private static InternalConditionsAgent internalConditionsAgent = new InternalConditionsAgent();
+
+
+
     // Make a list of agents
-    private static Agent[] agents = {wateringAgent, lightingAgent, nutrientAgent};
+    private static Agent[] agents = {wateringAgent, lightingAgent, nutrientAgent, internalConditionsAgent};
 
     public static void main(String[] args) throws IOException {
 

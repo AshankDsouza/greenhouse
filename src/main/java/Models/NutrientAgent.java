@@ -174,8 +174,6 @@ public class NutrientAgent implements Agent {
 
 
     public void run() {
-        System.out.println("Calling nutrients adder...");
-        NutrientAdder nutrientAdder = new NutrientAdder();
-        nutrientAdder.addNutrients(currentNutrientStatus);
+        System.out.println("Adding nutrients...");
     }
 }
