@@ -188,4 +188,14 @@ public class NutrientAgent implements Agent {
             System.out.println("Nutrients are sufficient!!");
         }
     }
+
+    @Override
+    public void alert(String message) {
+
+    }
+
+    @Override
+    public void wait(int timeInSeconds) {
+
+    }
 }

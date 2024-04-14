@@ -18,4 +18,14 @@ public class LightingAgent  implements Agent {
     public void run() {
         System.out.println("Not implemented yet.");
     }
+
+    @Override
+    public void alert(String message) {
+
+    }
+
+    @Override
+    public void wait(int timeInSeconds) {
+
+    }
 }

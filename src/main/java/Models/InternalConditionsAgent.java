@@ -31,6 +31,16 @@ public class InternalConditionsAgent  implements Agent {
         openWindow();
     }
 
+    @Override
+    public void alert(String message) {
+
+    }
+
+    @Override
+    public void wait(int timeInSeconds) {
+
+    }
+
     private void openWindow() {
         // if the moisture level is above and at 20% don't water the plants
         if(carbonLevel <= 10 & humidityLevel <= 10) {

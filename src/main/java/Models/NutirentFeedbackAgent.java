@@ -39,6 +39,16 @@ public class NutirentFeedbackAgent implements Agent {
         }
     }
 
+    @Override
+    public void alert(String message) {
+
+    }
+
+    @Override
+    public void wait(int timeInSeconds) {
+
+    }
+
     public static HashMap analyseNutrientAfterNutrientAddition(XSSFSheet mysheet){
         HashMap nutrientMap = new HashMap();
         for (int rowIndex = 1; rowIndex <= mysheet.getLastRowNum(); rowIndex++) {
