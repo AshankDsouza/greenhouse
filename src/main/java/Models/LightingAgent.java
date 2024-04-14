@@ -19,13 +19,11 @@ public class LightingAgent  implements Agent {
         System.out.println("Not implemented yet.");
     }
 
-    @Override
     public void alert(String message) {
 
     }
 
-    @Override
-    public void wait(int timeInSeconds) {
+    public void waitForSomeTime() {
 
     }
 }

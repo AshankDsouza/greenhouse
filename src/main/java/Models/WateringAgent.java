@@ -1,13 +1,10 @@
 package Models;
 
-import java.io.BufferedReader;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import Interfaces.Agent;
 import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
-import org.jline.terminal.Terminal;
 
 
 import Utils.TerminalUtils;
@@ -28,6 +25,8 @@ public class WateringAgent implements Agent {
 
     private float moistureLevel = 20;
 
+    private int delayTimeInSeconds = 10; // 4 hours = 14400 seconds
+
     // this method sets the moisture level of the soil
     private void setMoistureLevel(float currWaterLevel) {
         // Get the moisture level of the soil
@@ -47,13 +46,20 @@ public class WateringAgent implements Agent {
         waterPlants();
     }
 
-    @Override
-    public void alert(String message) {
+    public void alert(String message)  {
+
+
 
     }
 
-    @Override
-    public void wait(int timeInSeconds) {
+    public void waitForSomeTime() {
+
+        try {
+            TimeUnit.SECONDS.sleep(delayTimeInSeconds); // Program waits for 1 second
+        } catch (InterruptedException e) {
+            // Handle interruption exception if necessary
+            e.printStackTrace();
+        }
 
     }
 
