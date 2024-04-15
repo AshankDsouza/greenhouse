@@ -37,13 +37,20 @@ public class LightingAgent  implements Agent {
         float humidity = Float.parseFloat(lineReader.readLine(prompt));
         System.out.println("Reading the temperature sensor value for lighting agent");
         float temperature = Float.parseFloat(lineReader.readLine(prompt));
+        System.out.println("Checking the shading for lighting agent");
+        boolean shadingRequired = Boolean.parseBoolean(lineReader.readLine(prompt));
         setLightIntensity(lightIntensity);
         setHumidity(humidity);
         setTemperatureLevel(temperature);
+        setShadingLevel(shadingRequired);
     }
     private void setLightIntensity(float lightIntensityValue) {
         // Get the moisture level of the soil
         lightIntensity = lightIntensityValue;
+    }
+    private void setShadingLevel(boolean shadingRequired) {
+        // Get the moisture level of the soil
+        shadingRequired = shadingRequired;
     }
     private void setHumidity(float humidityValue) {
         // Get the moisture level of the soil
@@ -65,20 +72,13 @@ public class LightingAgent  implements Agent {
         return ledRequirement;
     }
     private boolean isShadingRequired(boolean ledRequirement) {
-        boolean shading =false;
+
         if(ledRequirement == true && lightIntensity > 50){
-            ledRequirement=false;
-            shading=true;
+            //ledRequirement=false;
+            shadingRequired=true;
         }
-        if(lightIntensity< 50)
-        {
-            shading=true;
-        }
-        if(lightIntensity< 50 && shading == true)
-        {
-            ledRequirement=true;
-        }
-        return shading;
+
+        return shadingRequired;
     }
     private void setLedRequirement(boolean ledRequirement) {
         // Get the moisture level of the soil
@@ -97,11 +97,12 @@ public class LightingAgent  implements Agent {
         setLedRequirement( ledRequirement);
         setShadingRequired( shadingRequirement);
         String display="Light is adequate";
-        if(ledRequired ==true)
-            display="---Turn ON the LED---";
-        if(shadingRequired ==true)
+
+         if(shadingRequired ==true && ledRequired ==true)
             display="-----Shading should been turned on for the lighting agent------";
-        if(shadingRequired == false && ledRequired ==false)
+         else if(shadingRequired ==true)
+             display="---Turn ON the LED---";
+        else if(shadingRequired == false && ledRequired ==false)
             display="-----Optimal Amount of light is available - No external source required for lighting agent-----";
         alert(display);
         waitForSomeTime();
