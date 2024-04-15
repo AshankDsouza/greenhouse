@@ -1,5 +1,4 @@
 package Models;
-import Interfaces.Agent;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -8,7 +7,7 @@ import services.FileServices;
 import java.util.HashMap;
 
 
-public class NutirentFeedbackAgent implements Agent {
+public class NutirentFeedback {
     public static int nitrogen = 80; //unit ppm
     public static int phosphorous = 60; //unit ppm
     public static int potassium = 200; //unit ppm
@@ -26,28 +25,25 @@ public class NutirentFeedbackAgent implements Agent {
     public static boolean feedbackRequired = false;
 
     public static HashMap currentNutrientStatus = new HashMap();
-    public void readSensors() {
-        System.out.println("Reading nutrient level in feedback...");
-        XSSFSheet sensorData = FileServices.readXLSX("NutrientSensorData.xlsx");
-        HashMap nutrientDefficiencyMap = analyseNutrientAfterNutrientAddition(sensorData);
-        currentNutrientStatus = nutrientDefficiencyMap;
-    }
+
 
     public void run() {
+        System.out.println("Reading nutrient level in feedback...");
+        XSSFSheet sensorData = FileServices.readXLSX("NutrientSensorDataAfter.xlsx");
+        HashMap nutrientDefficiencyMap = analyseNutrientAfterNutrientAddition(sensorData);
+        currentNutrientStatus = nutrientDefficiencyMap;
         if (feedbackRequired){
-        System.out.println("Calling back nutrient agent for discrepancy.....");
+            System.out.println("Calling back nutrient agent for discrepancy.....");
+            NutrientAgent.feedbackAction(currentNutrientStatus,feedbackRequired);
         }
-    }
+        else{
+            System.out.println("Nutrient level is fine in feedback step!!!");
+        }
 
-    @Override
-    public void alert(String message) {
 
-    }
-
-    @Override
-    public void waitForSomeTime() {
 
     }
+
 
     public static HashMap analyseNutrientAfterNutrientAddition(XSSFSheet mysheet){
         HashMap nutrientMap = new HashMap();

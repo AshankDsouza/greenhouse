@@ -169,6 +169,7 @@ public class NutrientAgent implements Agent {
         if (optimumReached) {
             System.out.println("Calling react component to fix excessive of the nutrients...");
             NutrientReactComponent nrc = new NutrientReactComponent();
+            nrc.stabilizeNutrientsContent(feedbackResponse);
         }
         else{
             System.out.println("Everything works fine in feedback.");
@@ -185,6 +186,9 @@ public class NutrientAgent implements Agent {
             System.out.println("Calling nutrients adder...");
             NutrientAdder nutrientAdder = new NutrientAdder();
             nutrientAdder.addNutrients(currentNutrientStatus);
+            NutirentFeedback nutrientFeed = new NutirentFeedback();
+            nutrientFeed.run();
+
         }
         else{
             System.out.println("Nutrients are sufficient!!");
