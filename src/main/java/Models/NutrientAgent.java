@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import services.FileServices;
+import java.util.concurrent.TimeUnit;
 
 public class NutrientAgent implements Agent {
 
@@ -33,11 +34,12 @@ public class NutrientAgent implements Agent {
 
     public static boolean nutrientRequired = false;
 
+    public  String sensorFile = "NutrientSensorData.xlsx";
 
     public void readSensors() {
-
+        nutrientRequired = false;
         System.out.println("Reading nutrient level...");
-        XSSFSheet sensorData = FileServices.readXLSX("NutrientSensorData.xlsx");
+        XSSFSheet sensorData = FileServices.readXLSX(returnSensorfile(sensorFile));
         HashMap nutrientDefficiencyMap = analyseNutrient(sensorData);
         currentNutrientStatus = nutrientDefficiencyMap;
     }
@@ -165,7 +167,7 @@ public class NutrientAgent implements Agent {
         return nutrientMap;
     }
 
-    public static void feedbackAction(HashMap feedbackResponse,boolean optimumReached){
+    public static void feedbackAction(HashMap feedbackResponse,boolean optimumReached) throws InterruptedException {
         if (optimumReached) {
             System.out.println("Calling react component to fix excessive of the nutrients...");
             NutrientReactComponent nrc = new NutrientReactComponent();
@@ -179,7 +181,7 @@ public class NutrientAgent implements Agent {
     }
 
 
-    public void run() {
+    public void run() throws InterruptedException {
         if (nutrientRequired) {
             System.out.println("Sending alert...");
             alert("There is nutrient requirement reported...");
@@ -203,5 +205,11 @@ public class NutrientAgent implements Agent {
     @Override
     public void waitForSomeTime() {
 
+    }
+
+    @Override
+    public String returnSensorfile(String filename) {
+        sensorFile=filename;
+        return sensorFile;
     }
 }

@@ -61,12 +61,18 @@ public class Main {
                     // read the sensors
                     agent.readSensors();
                     // run the agent
-                    agent.run();
+                    try {
+                        agent.run();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
 
                 });
                 // start the thread
                 thread.start();
                 // wait for the thread to finish
+
                 try {
                     thread.join();
                 } catch (InterruptedException e) {

@@ -126,4 +126,9 @@ public class LightingAgent  implements Agent {
             }
         }
     }
+
+    @Override
+    public String returnSensorfile(String filename) {
+        return null;
+    }
 }

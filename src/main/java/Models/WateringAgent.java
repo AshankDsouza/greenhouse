@@ -63,6 +63,11 @@ public class WateringAgent implements Agent {
 
     }
 
+    @Override
+    public String returnSensorfile(String filename) {
+        return null;
+    }
+
     // this method waters the plants in the greenhouse for the next 30 minutes
     private void waterPlants() {
         // if the moisture level is above and at 20% don't water the plants

@@ -27,7 +27,7 @@ public class NutirentFeedback {
     public static HashMap currentNutrientStatus = new HashMap();
 
 
-    public void run() {
+    public void run() throws InterruptedException {
         System.out.println("Reading nutrient level in feedback...");
         XSSFSheet sensorData = FileServices.readXLSX("NutrientSensorDataAfter.xlsx");
         HashMap nutrientDefficiencyMap = analyseNutrientAfterNutrientAddition(sensorData);
