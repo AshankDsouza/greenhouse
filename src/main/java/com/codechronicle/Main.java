@@ -62,6 +62,7 @@ public class Main {
                     agent.readSensors();
                     // run the agent
                     agent.run();
+
                 });
                 // start the thread
                 thread.start();
