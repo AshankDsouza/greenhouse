@@ -91,6 +91,7 @@ public class LightingAgent  implements Agent {
 
     public void run() {
 
+
         boolean ledRequirement= isLedRequired();
         boolean shadingRequirement = isShadingRequired(ledRequirement);
         setLedRequirement( ledRequirement);
@@ -103,17 +104,17 @@ public class LightingAgent  implements Agent {
         if(shadingRequired == false && ledRequired ==false)
             display="-----Optimal Amount of light is available - No external source required for lighting agent-----";
         alert(display);
-        wait(10);
+        waitForSomeTime();
     }
-
 
     @Override
     public void alert(String message) {
        System.out.println(message);
     }
 
+
     @Override
-    public void wait(int timeInSeconds) {
+    public void waitForSomeTime() {
         long startTime = System.currentTimeMillis();
         long endTime = startTime + 10000;
         while (System.currentTimeMillis() < endTime) {

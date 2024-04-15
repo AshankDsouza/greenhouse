@@ -195,7 +195,7 @@ public class NutrientAgent implements Agent {
     }
 
     @Override
-    public void wait(int timeInSeconds) {
+    public void waitForSomeTime() {
 
     }
 }

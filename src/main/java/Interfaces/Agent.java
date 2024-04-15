@@ -9,5 +9,5 @@ public interface Agent {
 
     public void alert(String message);
 
-    public void wait(int timeInSeconds);
+    public void waitForSomeTime();
 }

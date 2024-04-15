@@ -31,13 +31,11 @@ public class InternalConditionsAgent  implements Agent {
         openWindow();
     }
 
-    @Override
     public void alert(String message) {
 
     }
 
-    @Override
-    public void wait(int timeInSeconds) {
+    public void waitForSomeTime() {
 
     }
 
