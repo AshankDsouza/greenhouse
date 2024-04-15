@@ -29,9 +29,14 @@ public class WateringAgent implements Agent {
     private int delayTimeInSeconds = 10; // 4 hours = 14400 seconds
 
     // this method sets the moisture level of the soil
-    private void setMoistureLevel(float currWaterLevel) {
+    public void setMoistureLevel(float currWaterLevel) {
         // Get the moisture level of the soil
         moistureLevel = currWaterLevel;
+    }
+
+    // get the moisture level of the soil
+    public float getMoistureLevel() {
+        return moistureLevel;
     }
     
     // implement the readSensors method

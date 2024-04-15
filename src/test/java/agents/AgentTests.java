@@ -5,6 +5,7 @@ package agents;
 
 import Models.LightingAgent;
 import Models.NutrientAgent;
+import Models.WateringAgent;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +17,19 @@ class AgentTests {
         LightingAgent lightingAgent = new LightingAgent();
 //        lightingAgent.readSensors();
         lightingAgent.run();
+    }
+
+
+    @Test
+    void testWateringAgentSettingOfMoistureLevel() {
+        // Create an instance of WateringAgent
+        WateringAgent wateringAgent = new WateringAgent();
+
+        // Set the moisture level using setMoistureLevel method
+        wateringAgent.setMoistureLevel(45);
+
+        // Check if the moisture level is correctly set
+        assertEquals(45, wateringAgent.getMoistureLevel());
     }
 
     @Test
