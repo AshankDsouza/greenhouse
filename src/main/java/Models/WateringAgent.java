@@ -45,7 +45,7 @@ public class WateringAgent implements Agent {
         // Exception handling for invalid input type
 
 
-        float moistureLevel = TerminalUtils.readInput(lineReader);
+        float moistureLevel = Float.parseFloat(lineReader.readLine(prompt));
         setMoistureLevel(moistureLevel);
     }
 
