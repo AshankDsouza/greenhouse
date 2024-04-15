@@ -48,9 +48,9 @@ public class LightingAgent  implements Agent {
         // Get the moisture level of the soil
         lightIntensity = lightIntensityValue;
     }
-    private void setShadingLevel(boolean shadingRequired) {
+    private void setShadingLevel(boolean shadingRequiredHere) {
         // Get the moisture level of the soil
-        shadingRequired = shadingRequired;
+        shadingRequired = shadingRequiredHere;
     }
     private void setHumidity(float humidityValue) {
         // Get the moisture level of the soil
