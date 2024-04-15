@@ -10,6 +10,7 @@ import org.jline.reader.LineReader;
 import Utils.TerminalUtils;
 
 
+
 // extends the Agent interface
 
 public class WateringAgent implements Agent {
@@ -36,7 +37,10 @@ public class WateringAgent implements Agent {
     // implement the readSensors method
     public void readSensors() {
         System.out.println("Reading moisture level. Please enter the moisture level: ");
-        float moistureLevel = Float.parseFloat(lineReader.readLine(prompt));
+        // Exception handling for invalid input type
+
+
+        float moistureLevel = TerminalUtils.readInput(lineReader);
         setMoistureLevel(moistureLevel);
     }
 
@@ -85,6 +89,6 @@ public class WateringAgent implements Agent {
         // Schedule a task to shutdown the scheduler after 30 seconds
         scheduler.schedule(() -> {
             scheduler.shutdown();
-        }, 30, TimeUnit.SECONDS);
+        }, 10, TimeUnit.SECONDS);
     }
 }
