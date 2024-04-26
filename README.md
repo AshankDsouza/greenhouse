@@ -1,5 +1,9 @@
 # About
 
+To install:
+1) Open in IntelliJ IDEA CE
+2) Fix all the build issues
+
 
 # Prerequisites
 
